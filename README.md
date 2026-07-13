@@ -1,4 +1,4 @@
-<img src="./grinder-x19.png" width="236" align="right">
+<img src="./grinder.png" width="236" align="right">
 
 ### <img src="./godot.svg" width="24" align="left">Godot
 #### [somethinger](https://github.com/eul3gy/somethinger) - It does something<br>[somethinger](https://github.com/eul3gy/somethinger) - It does something<br>[somethinger](https://github.com/eul3gy/somethinger) - It does something

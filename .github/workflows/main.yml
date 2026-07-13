@@ -15,6 +15,17 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v7
       
+      - name: Debug - list files
+        run: |
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Contents of root ==="
+          ls -la
+          echo "=== Contents of .github/scripts/ ==="
+          ls -la .github/scripts/ || echo "Folder doesn't exist!"
+          echo "=== Find all Python files ==="
+          find . -name "*.py"
+      
       - name: Install Python
         uses: actions/setup-python@v5
         with:

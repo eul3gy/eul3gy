@@ -46,7 +46,10 @@ final_md = ""
 # Godot Repos
 
 final_md += """### <img src="./godot.svg" width="24" align="left">GODOT\n#### """
-final_md += "<br>".join(godot_lines)
+if len(godot_lines) > 0:
+    final_md += "<br>".join(godot_lines)
+else:
+    final_md += "Soon!"
 
 # Other Repos
 

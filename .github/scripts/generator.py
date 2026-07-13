@@ -25,7 +25,7 @@ godot_lines = []
 other_lines = []
 
 for repo in repos_response.json():
-    if repo["private"] or repo["name"] == "godot": continue
+    if repo["private"]: continue
 
     name = repo["name"]
     description = repo["description"]
@@ -39,19 +39,19 @@ for repo in repos_response.json():
     if description: md += f" - {description}"
 
     if "godot" in topics:   godot_lines.append(md)
-    else:                   other_lines.append(md)
+    if "other" in topics:   other_lines.append(md)
 
 final_md = ""
 
 # Godot Repos
 
-final_md += """### <img src="./godot.svg" width="28" align="left">GODOT\n#### """
+final_md += """### <img src="./godot.svg" width="24" align="left">GODOT\n#### """
 final_md += "<br>".join(godot_lines)
 final_md += "\n\n"
 
 # Other Repos
 
-final_md += """### <img src="./code.svg" width="28" align="left">OTHER\n#### """
+final_md += """### <img src="./code.svg" width="24" align="left">OTHER\n#### """
 final_md += "<br>".join(other_lines)
 
 with open("README.md", "w", encoding="utf-8") as f:

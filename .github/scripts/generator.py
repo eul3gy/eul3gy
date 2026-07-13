@@ -47,12 +47,13 @@ final_md = ""
 
 final_md += """### <img src="./godot.svg" width="24" align="left">GODOT\n#### """
 final_md += "<br>".join(godot_lines)
-final_md += "\n\n"
 
 # Other Repos
 
-final_md += """### <img src="./code.svg" width="24" align="left">OTHER\n#### """
-final_md += "<br>".join(other_lines)
+if len(other_lines) > 0:
+    final_md += "\n\n"
+    final_md += """### <img src="./code.svg" width="24" align="left">OTHER\n#### """
+    final_md += "<br>".join(other_lines)
 
 with open("README.md", "w", encoding="utf-8") as f:
     f.write(final_md)

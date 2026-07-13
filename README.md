@@ -1,5 +1,3 @@
-<img src="./grinderx19.png" width="236" align="right">
-
 ### <img src="./godot.svg" width="24" align="left">GODOT
 #### [somethinger](https://github.com/eul3gy/somethinger) - It does something
 

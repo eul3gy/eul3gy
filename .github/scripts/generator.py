@@ -43,6 +43,10 @@ for repo in repos_response.json():
 
 final_md = ""
 
+# Grinder Sprite
+
+final_md += """<img src="./grinderx19.png" width="236" align="right">\n\n"""
+
 # Godot Repos
 
 final_md += """### <img src="./godot.svg" width="24" align="left">GODOT\n#### """

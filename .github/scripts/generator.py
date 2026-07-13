@@ -2,9 +2,29 @@ import os
 import requests
 import json
 
-TOKEN = os.getenv("TOKEN")
+username = "eul3gy"
+token = os.getenv("TOKEN")
 
-url = "https://api.github.com/users/eul3gy/repos"
+categories = [
+    {
+        "name": "godot",
+        "github_topic": "godot",
+        "title": "Godot Projects",
+        "icon": "./godot.svg",
+    },
+    
+    {
+        "name": "other",
+        "github_topic": "other",
+        "title": "Other",
+        "icon": "./code.svg",
+    }
+]
+
+lines = {}
+
+for category in categories:
+    lines[category["name"]] = []
 
 params = {
     "per_page": 100,
@@ -14,15 +34,12 @@ params = {
 }
 
 headers = {
-    "Authorization": f"Bearer {TOKEN}",
+    "Authorization": f"Bearer {token}",
     "Accept": "application/vnd.github.v3+json"
 }
 
-repos_response = requests.get(url, params=params, headers=headers)
+repos_response = requests.get(f"https://api.github.com/users/{username}/repos", params=params, headers=headers)
 repos_response.raise_for_status()
-
-godot_lines = []
-other_lines = []
 
 for repo in repos_response.json():
     if repo["private"]: continue
@@ -31,32 +48,27 @@ for repo in repos_response.json():
     description = repo["description"]
     topics = repo["topics"]
     url = repo["html_url"]
-    is_fork = repo["fork"]
+    #is_fork = repo["fork"]
 
-    md = "["
-    if is_fork: md += "(fork) "
-    md += f"{name}]({url})"
+    md = ""
+    md += f"[**{name}**]({url})"
     if description: md += f" - {description}"
+    
+    for category in categories:
+        if category["github_topic"] in topics:
+            lines[category["name"]].append(md)
 
-    if "godot" in topics:   godot_lines.append(md)
-    if "other" in topics:   other_lines.append(md)
+lists = []
 
-final_md = ""
+for category in categories:
+    cur_lines = lines[category["name"]]
+    if len(cur_lines) > 0:
+        cur_list = ""
+        cur_list += f"""<img src="{category["icon"]}" width="24" align="left">**{category["title"]}**\n\n"""
+        cur_list += "<br>".join(cur_lines)
+        lists.append(cur_list)
 
-# Godot Repos
-
-final_md += """### <img src="./godot.svg" width="24" align="left">GODOT\n#### """
-if len(godot_lines) > 0:
-    final_md += "<br>".join(godot_lines)
-else:
-    final_md += "Soon!"
-
-# Other Repos
-
-if len(other_lines) > 0:
-    final_md += "\n\n"
-    final_md += """### <img src="./code.svg" width="24" align="left">OTHER\n#### """
-    final_md += "<br>".join(other_lines)
+final_md = "\n\n<br>\n\n".join(lists)
 
 with open("README.md", "w", encoding="utf-8") as f:
     f.write(final_md)
